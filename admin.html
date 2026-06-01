@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>현일산업개발 — 관리자</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;font-family:var(--font-sans);background:var(--steel-50);color:var(--fg-2);
+       word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:24px}
+  .topbar{background:var(--charcoal);color:#fff}
+  .topbar .in{max-width:760px;margin:0 auto;padding:0 24px;height:66px;display:flex;align-items:center;gap:12px}
+  .topbar .ko{font-size:18px;font-weight:800;letter-spacing:-0.02em}
+  .topbar .tag{font-size:13px;color:var(--steel-400);font-weight:600}
+  .topbar .sp{margin-left:auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;
+       font-size:15px;font-weight:700;padding:12px 20px;border-radius:var(--radius-md);
+       border:1.5px solid transparent;cursor:pointer;letter-spacing:-0.01em}
+  .btn-primary{background:var(--green-700);color:#fff}
+  .btn-primary:hover{background:var(--green-600)}
+  .btn-primary:disabled{background:var(--steel-300);cursor:default}
+  .btn-ghost{background:transparent;color:var(--steel-300);border-color:rgba(255,255,255,0.2);font-size:13px;padding:8px 14px}
+  .btn-ghost:hover{background:rgba(255,255,255,0.08)}
+
+  /* 로그인 */
+  #login{max-width:380px;margin:9vh auto 0;background:#fff;border:1px solid var(--border-1);
+         border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:34px 30px}
+  #login .mk{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  #login .mk .ko{font-size:19px;font-weight:800;color:var(--fg-1);letter-spacing:-0.02em}
+  #login h1{font-size:16px;font-weight:700;color:var(--steel-600);margin:14px 0 22px}
+  label{display:block;font-size:13px;font-weight:700;color:var(--steel-500);margin:0 0 7px;letter-spacing:-0.01em}
+  input[type=email],input[type=password]{width:100%;font-family:inherit;font-size:15px;color:var(--fg-1);
+    padding:12px 14px;border:1.5px solid var(--steel-200);border-radius:var(--radius-md);margin-bottom:16px;outline:none}
+  input:focus{border-color:var(--green-600)}
+  #login .btn{width:100%}
+  .err{color:var(--danger);font-size:13.5px;font-weight:600;margin:2px 0 14px;min-height:18px}
+
+  /* 패널 */
+  #panel{display:none}
+  .intro{background:var(--green-50);border:1px solid var(--green-100);border-radius:var(--radius-md);
+         padding:16px 20px;font-size:14px;color:var(--steel-700);line-height:1.7;margin:24px 0}
+  .intro b{color:var(--green-800)}
+  .card{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg);
+        box-shadow:var(--shadow-xs);padding:18px;margin-bottom:16px;display:flex;gap:18px;align-items:center}
+  .card .thumb{width:140px;height:96px;flex:none;border-radius:var(--radius-md);overflow:hidden;
+        border:1px solid var(--steel-200);background:var(--steel-100)}
+  .card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .card .body{flex:1;min-width:0}
+  .card .name{font-size:15px;font-weight:800;color:var(--fg-1);letter-spacing:-0.01em}
+  .card .desc{font-size:12.5px;color:var(--steel-500);margin-top:3px}
+  .card .row{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+  .card input[type=file]{font-size:13px;max-width:210px}
+  .card .status{font-size:13px;font-weight:700;margin-left:auto}
+  .card .status.ok{color:var(--green-700)}
+  .card .status.busy{color:var(--steel-500)}
+  .card .status.bad{color:var(--danger)}
+  @media (max-width:560px){
+    .card{flex-direction:column;align-items:stretch}
+    .card .thumb{width:100%;height:170px}
+    .card .status{margin-left:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- 로그인 화면 -->
+<div id="login">
+  <div class="mk">
+    <svg width="34" height="34" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polygon points="6.68,14 24,13 14.5,18.5" fill="#43C07B"></polygon>
+      <polygon points="24,4 24,13 6.68,14" fill="#3BB870"></polygon>
+      <polygon points="24,4 41.32,14 24,13" fill="#2FA45F"></polygon>
+      <polygon points="41.32,14 33.5,18.5 24,13" fill="#249A57"></polygon>
+      <polygon points="6.68,14 14.5,18.5 14.5,29.5 6.68,34" fill="#2BA45D"></polygon>
+      <polygon points="41.32,14 41.32,34 33.5,29.5 33.5,18.5" fill="#1C7A45"></polygon>
+      <polygon points="24,13 33.5,18.5 33.5,29.5 24,35 14.5,29.5 14.5,18.5" fill="#34B36B"></polygon>
+      <polygon points="6.68,34 14.5,29.5 24,35 24,44" fill="#1A7040"></polygon>
+      <polygon points="41.32,34 24,44 24,35 33.5,29.5" fill="#155F38"></polygon>
+    </svg>
+    <span class="ko">현일산업개발</span>
+  </div>
+  <h1>관리자 로그인</h1>
+  <label for="email">이메일</label>
+  <input id="email" type="email" autocomplete="username" placeholder="관리자 이메일">
+  <label for="pw">비밀번호</label>
+  <input id="pw" type="password" autocomplete="current-password" placeholder="비밀번호">
+  <div class="err" id="loginErr"></div>
+  <button class="btn btn-primary" id="loginBtn">로그인</button>
+</div>
+
+<!-- 관리 패널 -->
+<div id="panel">
+  <div class="topbar">
+    <div class="in">
+      <span class="ko">현일산업개발</span>
+      <span class="tag">사진 관리자</span>
+      <span class="sp"></span>
+      <button class="btn btn-ghost" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="intro">
+      각 칸에서 <b>이미지를 선택하고 [업로드]</b>를 누르면 홈페이지에 바로 반영됩니다.
+      가로형(와이드) 사진을 권장하며, 큰 파일은 자동으로 적당한 크기로 줄여 올립니다.
+      잘못 올렸다면 다른 사진을 다시 올리면 교체돼요.
+    </div>
+    <div id="cards"></div>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script>
+const cfg = {
+  apiKey: "AIzaSyAT_Jd1uMaEVUyIClzi1cs2ctuMK8MX2wk",
+  authDomain: "hyunil-idc.firebaseapp.com",
+  projectId: "hyunil-idc",
+  storageBucket: "hyunil-idc.firebasestorage.app",
+  messagingSenderId: "460296515126",
+  appId: "1:460296515126:web:09c2f0bf06eba05b513297"
+};
+firebase.initializeApp(cfg);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+const DOC = db.doc('site/content');
+
+// 관리 대상 사진 6장 (key = 사이트의 data-cms-img 값, def = 기본 이미지)
+const SLOTS = [
+  { key:'banner',  name:'메인 상단 배너',        desc:'공장 전경 (가로형 권장)', def:'assets/plant-aerial-new.jpg' },
+  { key:'feature', name:'처리능력 대표 설비',     desc:'설비 클로즈업',           def:'assets/equipment-closeup.png' },
+  { key:'g1',      name:'처리능력 갤러리 ①',      desc:'처리 라인 전경',          def:'assets/plant-line.png' },
+  { key:'g2',      name:'처리능력 갤러리 ②',      desc:'파쇄·선별 설비',          def:'assets/plant-cone.png' },
+  { key:'g3',      name:'처리능력 갤러리 ③',      desc:'부지·전경',               def:'assets/plant-forest.png' },
+  { key:'story',   name:'대표 철학 현장 사진',     desc:'운영·작업 현장',          def:'assets/operator.png' }
+];
+
+const $ = function(id){ return document.getElementById(id); };
+
+// ---- 로그인 ----
+$('loginBtn').addEventListener('click', doLogin);
+$('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+function doLogin(){
+  $('loginErr').textContent = '';
+  const email = $('email').value.trim();
+  const pw = $('pw').value;
+  if(!email || !pw){ $('loginErr').textContent = '이메일과 비밀번호를 입력하세요.'; return; }
+  $('loginBtn').disabled = true; $('loginBtn').textContent = '로그인 중...';
+  auth.signInWithEmailAndPassword(email, pw).catch(function(e){
+    $('loginErr').textContent = '로그인 실패: 이메일 또는 비밀번호를 확인하세요.';
+    console.warn(e && e.code);
+  }).finally(function(){
+    $('loginBtn').disabled = false; $('loginBtn').textContent = '로그인';
+  });
+}
+$('logoutBtn').addEventListener('click', function(){ auth.signOut(); });
+
+// ---- 인증 상태 ----
+auth.onAuthStateChanged(function(user){
+  if(user){
+    $('login').style.display = 'none';
+    $('panel').style.display = 'block';
+    buildCards();
+  } else {
+    $('panel').style.display = 'none';
+    $('login').style.display = 'block';
+  }
+});
+
+// ---- 카드 렌더 + 현재 이미지 불러오기 ----
+function buildCards(){
+  const box = $('cards');
+  box.innerHTML = '';
+  SLOTS.forEach(function(s){
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML =
+      '<div class="thumb"><img id="thumb-'+s.key+'" src="'+s.def+'" alt=""></div>'+
+      '<div class="body">'+
+        '<div class="name">'+s.name+'</div>'+
+        '<div class="desc">'+s.desc+'</div>'+
+        '<div class="row">'+
+          '<input type="file" accept="image/*" id="file-'+s.key+'">'+
+          '<button class="btn btn-primary" id="up-'+s.key+'">업로드</button>'+
+          '<span class="status" id="st-'+s.key+'"></span>'+
+        '</div>'+
+      '</div>';
+    box.appendChild(c);
+    $('up-'+s.key).addEventListener('click', function(){ upload(s); });
+  });
+  // 저장된 이미지가 있으면 썸네일 갱신
+  DOC.get().then(function(snap){
+    if(!snap.exists) return;
+    const imgs = (snap.data()||{}).images || {};
+    SLOTS.forEach(function(s){
+      if(imgs[s.key]){ $('thumb-'+s.key).src = imgs[s.key]; }
+    });
+  }).catch(function(e){ console.warn(e); });
+}
+
+// ---- 이미지 축소 후 업로드 ----
+function setStatus(key, cls, msg){
+  const el = $('st-'+key); el.className = 'status '+cls; el.textContent = msg;
+}
+async function downscale(file, maxDim){
+  try{
+    const bmp = await createImageBitmap(file);
+    const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
+    const w = Math.round(bmp.width*scale), h = Math.round(bmp.height*scale);
+    const cv = document.createElement('canvas'); cv.width=w; cv.height=h;
+    cv.getContext('2d').drawImage(bmp,0,0,w,h);
+    const blob = await new Promise(function(res){ cv.toBlob(res,'image/jpeg',0.85); });
+    return blob || file;
+  }catch(e){ return file; }
+}
+async function upload(s){
+  const f = $('file-'+s.key).files[0];
+  if(!f){ setStatus(s.key,'bad','사진을 먼저 선택하세요'); return; }
+  setStatus(s.key,'busy','업로드 중...');
+  try{
+    const blob = await downscale(f, 1600);
+    const ref = storage.ref('site/'+s.key+'_'+Date.now()+'.jpg');
+    await ref.put(blob, { contentType:'image/jpeg' });
+    const url = await ref.getDownloadURL();
+    const patch = { images:{} }; patch.images[s.key] = url;
+    await DOC.set(patch, { merge:true });
+    $('thumb-'+s.key).src = url;
+    setStatus(s.key,'ok','저장됨 ✓');
+  }catch(e){
+    console.warn(e);
+    setStatus(s.key,'bad','실패: '+(e && e.code ? e.code : '다시 시도'));
+  }
+}
+</script>
+</body>
+</html>

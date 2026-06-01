@@ -709,7 +709,7 @@
 
 <!-- ============ 현장 배너 ============ -->
 <section class="plant-banner" data-screen-label="현장 배너">
-  <img src="assets/plant-aerial-new.jpg" alt="현일산업개발 공장 전경" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+  <img data-cms-img="banner" src="assets/plant-aerial-new.jpg" alt="현일산업개발 공장 전경" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
   <div class="pb-overlay">
     <div class="container">
       <span class="pb-eyebrow">
@@ -767,7 +767,7 @@
     </div>
 
     <div class="cap-feature">
-      <img src="assets/equipment-closeup.png" alt="대표 처리 설비" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img data-cms-img="feature" src="assets/equipment-closeup.png" alt="대표 처리 설비" style="width:100%;height:100%;object-fit:cover;display:block">
     </div>
 
     <div class="cap-hl">
@@ -826,9 +826,9 @@
     </div>
 
     <div class="cap-gallery">
-      <div class="g"><img src="assets/plant-line.png" alt="처리 라인" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-      <div class="g"><img src="assets/plant-cone.png" alt="파쇄·선별 설비" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-      <div class="g"><img src="assets/plant-forest.png" alt="공장 부지 전경" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div class="g"><img data-cms-img="g1" src="assets/plant-line.png" alt="처리 라인" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div class="g"><img data-cms-img="g2" src="assets/plant-cone.png" alt="파쇄·선별 설비" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div class="g"><img data-cms-img="g3" src="assets/plant-forest.png" alt="공장 부지 전경" style="width:100%;height:100%;object-fit:cover;display:block"></div>
     </div>
 
     <div class="chart-card">
@@ -1078,7 +1078,7 @@
   <div class="container">
     <div class="story-grid">
       <div class="story-photo">
-        <img src="assets/operator.png" alt="현장 운영" style="width:100%;height:100%;object-fit:cover;display:block">
+        <img data-cms-img="story" src="assets/operator.png" alt="현장 운영" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
       <div class="story-quote">
         <span class="qmark">&ldquo;</span>
@@ -1197,7 +1197,7 @@
         <span class="mono">사업자등록번호 307-81-23714</span>
         <span class="mono">법인등록번호 161211-0015818</span>
         <span class="mono">올바로 110566079</span>
-        <a href="현일산업개발 이미지 관리자.html" style="color:var(--steel-400);font-weight:600">이미지 관리</a>
+        <a href="admin.html" style="color:var(--steel-400);font-weight:600">관리자</a>
       </div>
     </div>
   </div>
@@ -1266,6 +1266,32 @@
       bars.forEach(function(b){ if (!b._done){ b._done = true; b.style.height = b.getAttribute('data-h') + 'px'; } });
     }, 1800);
   })();
+</script>
+<!-- ===== Firebase: 관리자에서 올린 사진을 사이트에 자동 반영 (없으면 기본 이미지 유지) ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+  var cfg = {
+    apiKey: "AIzaSyAT_Jd1uMaEVUyIClzi1cs2ctuMK8MX2wk",
+    authDomain: "hyunil-idc.firebaseapp.com",
+    projectId: "hyunil-idc",
+    storageBucket: "hyunil-idc.firebasestorage.app",
+    messagingSenderId: "460296515126",
+    appId: "1:460296515126:web:09c2f0bf06eba05b513297"
+  };
+  try {
+    firebase.initializeApp(cfg);
+    firebase.firestore().doc('site/content').get().then(function(snap){
+      if (!snap.exists) return;
+      var imgs = (snap.data() || {}).images || {};
+      Object.keys(imgs).forEach(function(k){
+        if (!imgs[k]) return;
+        document.querySelectorAll('[data-cms-img="'+k+'"]').forEach(function(el){ el.src = imgs[k]; });
+      });
+    }).catch(function(e){ console.warn('CMS 이미지 로드 생략:', e && e.message); });
+  } catch (e) { console.warn('Firebase 초기화 생략:', e && e.message); }
+})();
 </script>
 
 </body>
