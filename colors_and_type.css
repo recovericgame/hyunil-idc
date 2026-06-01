@@ -1,0 +1,290 @@
+/* ============================================================
+   현일산업개발 (HYUNIL Industrial Development)
+   Design System — Color & Type Foundations
+   ------------------------------------------------------------
+   Industrial trust-type design: charcoal / steel-grey base,
+   deep green (environment / circular) accent, earth-tone
+   secondary. Solid Korean gothic (Pretendard). Numbers are
+   large, strong, tabular. No heavy gradients, no emoji,
+   no rounded pastels.
+   ============================================================ */
+
+/* ---- Fonts -------------------------------------------------
+   Pretendard Variable served from CDN (jsDelivr).
+   NOTE: this is a substitution-by-CDN — no local .woff2 was
+   provided. See README "Fonts" note. IBM Plex Mono is used
+   ONLY for technical codes (cert / lot / spec numbers).
+   ----------------------------------------------------------- */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ====== NEUTRALS — charcoal & steel grey (base) ====== */
+  --charcoal:   #14181B;   /* near-black, primary ink / dark sections */
+  --steel-900:  #1C2226;
+  --steel-800:  #272F35;
+  --steel-700:  #364048;   /* strong body ink on light */
+  --steel-600:  #4A565E;
+  --steel-500:  #647077;   /* muted text */
+  --steel-400:  #8A969D;   /* placeholder / disabled */
+  --steel-300:  #B4BDC2;   /* hairline on dark */
+  --steel-200:  #D2D9DD;   /* borders */
+  --steel-150:  #E1E6E9;
+  --steel-100:  #EDF0F2;   /* fills / table stripes */
+  --steel-50:   #F5F7F8;   /* page base tint */
+  --white:      #FFFFFF;
+
+  /* ====== DEEP GREEN — environment / circular (primary accent) ====== */
+  --green-950:  #0C2A1C;
+  --green-900:  #123A28;
+  --green-800:  #16482F;
+  --green-700:  #1B5E3D;   /* PRIMARY brand green */
+  --green-600:  #237049;
+  --green-500:  #2E8B5C;   /* brighter — emphasis / hover */
+  --green-300:  #7FB89B;
+  --green-100:  #DCEBE3;   /* tint fill */
+  --green-50:   #EEF5F1;
+
+  /* ====== EARTH TONE — clay / aggregate (secondary) ====== */
+  --earth-800:  #5E4830;
+  --earth-700:  #7A5C3E;   /* secondary accent */
+  --earth-500:  #A07A4F;
+  --earth-400:  #BD9468;
+  --earth-300:  #D2B488;
+  --earth-100:  #EDE3D3;   /* warm tint fill */
+  --earth-50:   #F6F0E6;
+
+  /* ====== SEMANTIC ====== */
+  --success:    #237049;   /* = green-600 */
+  --warning:    #B5821F;   /* ochre / earth amber */
+  --danger:     #A8392C;   /* industrial brick red */
+  --info:       #2C5A78;   /* steel blue (rare, technical) */
+  --danger-50:  #F7ECEA;
+  --warning-50: #F7F0DD;
+  --info-50:    #E9F0F4;
+
+  /* ====== FOREGROUND / TEXT roles ====== */
+  --fg-1: var(--charcoal);    /* headlines, primary text */
+  --fg-2: var(--steel-700);   /* body */
+  --fg-3: var(--steel-500);   /* secondary / captions */
+  --fg-4: var(--steel-400);   /* disabled / placeholder */
+  --fg-on-dark-1: var(--white);
+  --fg-on-dark-2: var(--steel-300);
+  --fg-on-dark-3: var(--steel-400);
+  --fg-accent: var(--green-700);
+
+  /* ====== BACKGROUND / SURFACE roles ====== */
+  --bg-page:    var(--steel-50);
+  --bg-surface: var(--white);
+  --bg-sunken:  var(--steel-100);
+  --bg-dark:    var(--charcoal);
+  --bg-dark-2:  var(--steel-800);
+  --bg-accent:  var(--green-700);
+  --bg-accent-tint: var(--green-50);
+
+  /* ====== BORDERS ====== */
+  --border-1: var(--steel-200);   /* default hairline */
+  --border-2: var(--steel-300);   /* stronger */
+  --border-strong: var(--steel-700);
+  --border-on-dark: rgba(255,255,255,0.12);
+  --border-accent: var(--green-700);
+
+  /* ====== TYPE FAMILIES ====== */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+               "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* ====== TYPE SCALE (px) ======
+     Built for a heavy, confident industrial voice. Numbers
+     are pushed large via the --num-* display sizes. */
+  --text-display: 72px;   /* hero metrics, big numbers */
+  --text-h1: 48px;
+  --text-h2: 36px;
+  --text-h3: 28px;
+  --text-h4: 22px;
+  --text-h5: 18px;
+  --text-body-lg: 18px;
+  --text-body: 16px;
+  --text-sm: 14px;
+  --text-xs: 13px;
+  --text-eyebrow: 13px;   /* uppercase / tracked labels */
+
+  /* ====== WEIGHTS ====== */
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-semibold: 600;
+  --w-bold: 700;
+  --w-extrabold: 800;
+  --w-black: 900;
+
+  /* ====== LINE HEIGHTS ====== */
+  --lh-tight: 1.1;
+  --lh-snug: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  /* ====== LETTER SPACING ====== */
+  --ls-tight: -0.02em;    /* large display / numbers */
+  --ls-snug: -0.01em;     /* headings */
+  --ls-normal: 0;
+  --ls-eyebrow: 0.14em;   /* tracked uppercase eyebrows */
+
+  /* ====== SPACING (4px base grid) ====== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ====== RADII — restrained, squared-off industrial feel ====== */
+  --radius-0: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;     /* default for cards / inputs / buttons */
+  --radius-lg: 6px;
+  --radius-pill: 999px; /* used sparingly — status chips only */
+
+  /* ====== SHADOWS — tight, low, neutral (no soft purple glow) ====== */
+  --shadow-xs: 0 1px 2px rgba(20,24,27,0.06);
+  --shadow-sm: 0 1px 3px rgba(20,24,27,0.10), 0 1px 2px rgba(20,24,27,0.06);
+  --shadow-md: 0 4px 12px rgba(20,24,27,0.10), 0 2px 4px rgba(20,24,27,0.06);
+  --shadow-lg: 0 12px 32px rgba(20,24,27,0.14);
+  --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.04);
+
+  /* ====== MOTION — quick, decisive, no bounce ====== */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 280ms;
+
+  /* ====== CONTAINER ====== */
+  --container-max: 1200px;
+  --container-pad: 24px;
+}
+
+/* ============================================================
+   SEMANTIC TYPE CLASSES
+   Use these directly, or copy the rules into component CSS.
+   ============================================================ */
+
+.ds-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--green-700);
+  line-height: var(--lh-normal);
+}
+
+.ds-display {
+  font-family: var(--font-sans);
+  font-size: var(--text-display);
+  font-weight: var(--w-black);
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-tight);
+  color: var(--fg-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h1);
+  font-weight: var(--w-extrabold);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-tight);
+  color: var(--fg-1);
+}
+
+.ds-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h2);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+
+.ds-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+
+.ds-h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h4);
+  font-weight: var(--w-semibold);
+  letter-spacing: var(--ls-normal);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+
+.ds-h5 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h5);
+  font-weight: var(--w-semibold);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+
+.ds-body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-lg);
+  font-weight: var(--w-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+
+.ds-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--w-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+
+.ds-sm {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--w-regular);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+
+.ds-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--w-medium);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+
+/* Big strong number — the signature element of the brand */
+.ds-metric {
+  font-family: var(--font-sans);
+  font-weight: var(--w-black);
+  letter-spacing: var(--ls-tight);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-1);
+}
+
+.ds-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--w-medium);
+  letter-spacing: 0.01em;
+  color: var(--fg-2);
+}
