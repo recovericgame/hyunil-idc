@@ -1,8 +1,9 @@
 {
+  "id": "/admin.html",
   "name": "현일산업개발 관리자",
   "short_name": "현일 관리자",
   "start_url": "/admin.html",
-  "scope": "/",
+  "scope": "/admin.html",
   "display": "standalone",
   "background_color": "#14181B",
   "theme_color": "#14181B",
