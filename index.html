@@ -75,8 +75,7 @@
 
   .site-header {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: saturate(150%) blur(8px);
+    background: #fff;
     border-bottom: 1px solid var(--border-1);
   }
   .site-header .container {
@@ -1222,7 +1221,21 @@
       bars.forEach(function(b){ if (!b._done && inView(b)) growBar(b); });
     }
 
-    window.addEventListener('scroll', check, { passive: true });
+    var ticking = false;
+    function allDone(){
+      return counters.every(function(el){ return el._done; })
+          && bars.every(function(b){ return b._done; });
+    }
+    function onScroll(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        check();
+        ticking = false;
+        if (allDone()) window.removeEventListener('scroll', onScroll);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', check);
     check();
     // Hard fallback: RAF is paused in hidden/backgrounded frames, so guarantee
