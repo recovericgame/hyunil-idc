@@ -497,11 +497,18 @@
   @media (max-width: 600px) {
     .container { padding-inline: 18px; }
 
-    /* 헤더 */
-    .site-header .container { height: 64px; gap: 14px; }
-    .brand .mark { width: 38px; height: 38px; }
-    .brand .ko { font-size: 18px; }
-    .header-phone .ph-num { font-size: 17px; }
+    /* 헤더 — 로고+회사명 / 상담문의 버튼만 (전화 전체표시는 줄바꿈 유발 → 숨김) */
+    .site-header .container { height: 62px; gap: 12px; }
+    .brand { gap: 9px; }
+    .brand .mark { width: 36px; height: 36px; }
+    .brand .ko { font-size: 18px; white-space: nowrap; }
+    .brand .en { letter-spacing: 0.12em; }
+    .header-phone { display: none; }
+    .header-actions { gap: 0; }
+    .header-actions .btn { padding: 9px 15px; font-size: 13.5px; }
+    /* 상단 바: 사업자번호는 좁은 화면에서 숨겨 한 줄 유지 */
+    .utility-bar { font-size: 12px; }
+    .utility-bar .u-right { gap: 12px; }
 
     /* 큰 타이틀·숫자 축소 */
     .hero-grid { padding-top: 48px; padding-bottom: 40px; gap: 28px; }
