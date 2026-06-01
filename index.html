@@ -8,13 +8,13 @@
 
 <!-- 파비콘 (브라우저 탭 아이콘) -->
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/og-thumbnail.jpg">
+<link rel="apple-touch-icon" href="assets/og-cover.jpg">
 
 <!-- 공유 썸네일 (카카오톡/페이스북 등 링크 미리보기) -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="현일산업개발 — 건설폐기물 중간처리 · 순환골재 전문">
 <meta property="og:description" content="충남 공주 · 일 800톤 처리, 재자원화율 98.77%. 건설사·관급 발주처가 믿고 맡기는 적법 처리 파트너.">
-<meta property="og:image" content="https://www.hyunil-cnd.com/assets/og-thumbnail.jpg">
+<meta property="og:image" content="https://www.hyunil-cnd.com/assets/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://www.hyunil-cnd.com/">
@@ -22,7 +22,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="현일산업개발 — 건설폐기물 중간처리 · 순환골재 전문">
 <meta name="twitter:description" content="충남 공주 · 일 800톤 처리, 재자원화율 98.77%.">
-<meta name="twitter:image" content="https://www.hyunil-cnd.com/assets/og-thumbnail.jpg">
+<meta name="twitter:image" content="https://www.hyunil-cnd.com/assets/og-cover.jpg">
 
 <link rel="stylesheet" href="colors_and_type.css">
 <style>
@@ -578,6 +578,45 @@
     /* 지도 */
     .map-slot, .map-slot iframe { min-height: 300px; }
   }
+
+  /* ---- 조직 구성 ---- */
+  .org { max-width: 980px; margin: 0 auto; }
+  .org-lead { display:flex; justify-content:center; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  .org-node { background:#fff; border:1px solid var(--border-1); border-radius:var(--radius-md); box-shadow:var(--shadow-xs); text-align:center; overflow:hidden; min-width:150px; }
+  .org-node .r { font-size:11.5px; font-weight:800; letter-spacing:0.01em; padding:7px 14px; line-height:1.35; color:var(--steel-700); background:var(--steel-100); }
+  .org-node .n { font-size:16px; font-weight:800; color:var(--fg-1); padding:9px 14px; letter-spacing:-0.01em; }
+  .org-node--ceo { min-width:210px; box-shadow:var(--shadow-md); }
+  .org-node--ceo .r { background:var(--green-700); color:#fff; font-size:12.5px; }
+  .org-node--ceo .n { font-size:19px; }
+  .org-node--exec .r { background:var(--earth-700); color:#fff; }
+  .org-node--head .r { background:var(--charcoal); color:#fff; }
+  .org-stem { width:2px; height:26px; background:var(--steel-200); margin:0 auto; }
+  .org-branches { display:grid; grid-template-columns:0.85fr 1.6fr; gap:24px; align-items:start; }
+  .org-col { display:flex; flex-direction:column; align-items:stretch; gap:12px; }
+  .org-chain { display:flex; flex-direction:column; gap:10px; }
+  .org-depts { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .org-dept { background:#fff; border:1px solid var(--border-1); border-radius:var(--radius-md); box-shadow:var(--shadow-xs); overflow:hidden; }
+  .org-dept .dh { background:var(--green-50); color:var(--green-800); font-size:13.5px; font-weight:800; padding:10px 14px; border-bottom:1px solid var(--green-100); letter-spacing:-0.01em; }
+  .org-dept ul { list-style:none; margin:0; padding:8px 14px; }
+  .org-dept li { font-size:14px; color:var(--steel-700); font-weight:600; padding:5px 0; display:flex; align-items:center; gap:8px; }
+  .org-dept li b { color:var(--fg-1); font-weight:800; }
+  .org-dept li .tag { font-size:11px; color:#fff; background:var(--green-700); padding:1px 8px; border-radius:var(--radius-pill); font-weight:700; }
+  .org-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:36px; }
+  .os { background:var(--steel-50); border:1px solid var(--border-1); border-radius:var(--radius-md); padding:18px; text-align:center; }
+  .os .v { display:block; font-size:34px; font-weight:900; color:var(--green-700); letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
+  .os .v .u { font-size:15px; font-weight:700; color:var(--steel-500); }
+  .os .l { display:block; font-size:13px; color:var(--steel-500); font-weight:700; margin-top:8px; }
+  .os--total { background:var(--green-700); border-color:var(--green-700); }
+  .os--total .v, .os--total .v .u { color:#fff; }
+  .os--total .l { color:var(--green-100); }
+  @media (max-width:760px){
+    .org-branches { grid-template-columns:1fr; gap:16px; }
+    .org-stem { height:18px; }
+  }
+  @media (max-width:560px){
+    .org-depts { grid-template-columns:1fr; }
+    .org-stats { grid-template-columns:repeat(2,1fr); }
+  }
 </style>
 </head>
 <body>
@@ -622,6 +661,7 @@
       <a href="#certs">인증·품질</a>
       <a href="#clients">실적</a>
       <a href="#transparency">투명성</a>
+      <a href="#org">조직</a>
       <a href="#location">오시는 길</a>
     </nav>
 
@@ -1088,6 +1128,70 @@
           <b>박철균</b>
           <span>주식회사 현일산업개발 대표이사</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 조직 구성 ============ -->
+<section class="section" id="org" data-screen-label="조직">
+  <div class="container">
+    <div class="sec-head">
+      <p class="sec-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        조직 구성
+      </p>
+      <h2 class="sec-title">19명이 만드는 일관 처리 체계</h2>
+      <p class="sec-desc">연구 · 관리 · 현장이 유기적으로 연결된 조직으로, 적법한 처리와 순환골재 품질을 책임집니다.</p>
+    </div>
+
+    <div class="org">
+      <div class="org-lead">
+        <div class="org-node org-node--ceo"><div class="r">대표이사</div><div class="n">박철균</div></div>
+        <div class="org-node org-node--exec"><div class="r">사내이사</div><div class="n">박영균</div></div>
+      </div>
+
+      <div class="org-stem"></div>
+
+      <div class="org-branches">
+        <!-- 연구 부문 -->
+        <div class="org-col">
+          <div class="org-node org-node--head"><div class="r">순환골재 품질개선 연구소장</div><div class="n">박병익</div></div>
+          <div class="org-chain">
+            <div class="org-node"><div class="r">수석연구원</div><div class="n">장동식</div></div>
+            <div class="org-node"><div class="r">책임연구원</div><div class="n">이상하</div></div>
+          </div>
+        </div>
+
+        <!-- 업무총괄 부문 -->
+        <div class="org-col">
+          <div class="org-node org-node--head"><div class="r">업무총괄</div><div class="n">김길태</div></div>
+          <div class="org-depts">
+            <div class="org-dept">
+              <div class="dh">관리과</div>
+              <ul><li>오수민</li></ul>
+            </div>
+            <div class="org-dept">
+              <div class="dh">회계과</div>
+              <ul><li>곽미영</li><li>이경숙</li></ul>
+            </div>
+            <div class="org-dept">
+              <div class="dh">현장소장 · 현장직</div>
+              <ul><li><b>정상훈</b> <span class="tag">현장소장</span></li><li>유현종</li><li>최용석</li><li>이주석</li><li>김용수</li><li>허창규</li></ul>
+            </div>
+            <div class="org-dept">
+              <div class="dh">차량운전팀</div>
+              <ul><li>정현길</li><li>강정규</li><li>홍선기</li><li>박상국</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="org-stats">
+        <div class="os"><span class="v">6<span class="u">명</span></span><span class="l">관리직</span></div>
+        <div class="os"><span class="v">3<span class="u">명</span></span><span class="l">연구직</span></div>
+        <div class="os"><span class="v">10<span class="u">명</span></span><span class="l">현장직</span></div>
+        <div class="os os--total"><span class="v">19<span class="u">명</span></span><span class="l">총 인원</span></div>
       </div>
     </div>
   </div>
