@@ -8,7 +8,13 @@
 
 <!-- 파비콘 (브라우저 탭 아이콘) -->
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/og-cover.jpg">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#1B5E3D">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="현일산업개발">
 
 <!-- 공유 썸네일 (카카오톡/페이스북 등 링크 미리보기) -->
 <meta property="og:type" content="website">
@@ -1386,12 +1392,11 @@
   };
   try {
     firebase.initializeApp(cfg);
-    firebase.firestore().doc('site/content').get().then(function(snap){
-      if (!snap.exists) return;
-      var imgs = (snap.data() || {}).images || {};
-      Object.keys(imgs).forEach(function(k){
-        if (!imgs[k]) return;
-        document.querySelectorAll('[data-cms-img="'+k+'"]').forEach(function(el){ el.src = imgs[k]; });
+    firebase.firestore().collection('site').get().then(function(qs){
+      qs.forEach(function(doc){
+        var d = doc.data() || {};
+        if (!d.data) return;
+        document.querySelectorAll('[data-cms-img="'+doc.id+'"]').forEach(function(el){ el.src = d.data; });
       });
     }).catch(function(e){ console.warn('CMS 이미지 로드 생략:', e && e.message); });
   } catch (e) { console.warn('Firebase 초기화 생략:', e && e.message); }

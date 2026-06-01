@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>현일산업개발 — 관리자</title>
 <link rel="stylesheet" href="colors_and_type.css">
-<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="icon" href="assets/admin-192.png">
+<link rel="apple-touch-icon" href="assets/admin-192.png">
+<link rel="manifest" href="admin.webmanifest">
+<meta name="theme-color" content="#14181B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="현일 관리자">
 <style>
   *,*::before,*::after{box-sizing:border-box}
   body{margin:0;font-family:var(--font-sans);background:var(--steel-50);color:var(--fg-2);
@@ -24,21 +31,17 @@
   .btn-primary:disabled{background:var(--steel-300);cursor:default}
   .btn-ghost{background:transparent;color:var(--steel-300);border-color:rgba(255,255,255,0.2);font-size:13px;padding:8px 14px}
   .btn-ghost:hover{background:rgba(255,255,255,0.08)}
-
-  /* 로그인 */
   #login{max-width:380px;margin:9vh auto 0;background:#fff;border:1px solid var(--border-1);
          border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:34px 30px}
   #login .mk{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   #login .mk .ko{font-size:19px;font-weight:800;color:var(--fg-1);letter-spacing:-0.02em}
   #login h1{font-size:16px;font-weight:700;color:var(--steel-600);margin:14px 0 22px}
-  label{display:block;font-size:13px;font-weight:700;color:var(--steel-500);margin:0 0 7px;letter-spacing:-0.01em}
+  label{display:block;font-size:13px;font-weight:700;color:var(--steel-500);margin:0 0 7px}
   input[type=email],input[type=password]{width:100%;font-family:inherit;font-size:15px;color:var(--fg-1);
     padding:12px 14px;border:1.5px solid var(--steel-200);border-radius:var(--radius-md);margin-bottom:16px;outline:none}
   input:focus{border-color:var(--green-600)}
   #login .btn{width:100%}
   .err{color:var(--danger);font-size:13.5px;font-weight:600;margin:2px 0 14px;min-height:18px}
-
-  /* 패널 */
   #panel{display:none}
   .intro{background:var(--green-50);border:1px solid var(--green-100);border-radius:var(--radius-md);
          padding:16px 20px;font-size:14px;color:var(--steel-700);line-height:1.7;margin:24px 0}
@@ -66,7 +69,6 @@
 </head>
 <body>
 
-<!-- 로그인 화면 -->
 <div id="login">
   <div class="mk">
     <svg width="34" height="34" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -91,7 +93,6 @@
   <button class="btn btn-primary" id="loginBtn">로그인</button>
 </div>
 
-<!-- 관리 패널 -->
 <div id="panel">
   <div class="topbar">
     <div class="in">
@@ -104,18 +105,16 @@
   <div class="wrap">
     <div class="intro">
       각 칸에서 <b>이미지를 선택하고 [업로드]</b>를 누르면 홈페이지에 바로 반영됩니다.
-      가로형(와이드) 사진을 권장하며, 큰 파일은 자동으로 적당한 크기로 줄여 올립니다.
+      가로형(와이드) 사진을 권장하며, 큰 파일은 자동으로 적당한 크기로 줄여 저장합니다.
       잘못 올렸다면 다른 사진을 다시 올리면 교체돼요.
     </div>
     <div id="cards"></div>
   </div>
 </div>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script>
 const cfg = {
   apiKey: "AIzaSyAT_Jd1uMaEVUyIClzi1cs2ctuMK8MX2wk",
@@ -128,63 +127,44 @@ const cfg = {
 firebase.initializeApp(cfg);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
-const DOC = db.doc('site/content');
 
-// 관리 대상 사진 6장 (key = 사이트의 data-cms-img 값, def = 기본 이미지)
+// 관리 대상 사진 6장 (key = 사이트의 data-cms-img, Firestore 문서 site/{key} 에 저장)
 const SLOTS = [
-  { key:'banner',  name:'메인 상단 배너',        desc:'공장 전경 (가로형 권장)', def:'assets/plant-aerial-new.jpg' },
-  { key:'feature', name:'처리능력 대표 설비',     desc:'설비 클로즈업',           def:'assets/equipment-closeup.png' },
-  { key:'g1',      name:'처리능력 갤러리 ①',      desc:'처리 라인 전경',          def:'assets/plant-line.png' },
-  { key:'g2',      name:'처리능력 갤러리 ②',      desc:'파쇄·선별 설비',          def:'assets/plant-cone.png' },
-  { key:'g3',      name:'처리능력 갤러리 ③',      desc:'부지·전경',               def:'assets/plant-forest.png' },
-  { key:'story',   name:'대표 철학 현장 사진',     desc:'운영·작업 현장',          def:'assets/operator.png' }
+  { key:'banner',  name:'메인 상단 배너',    desc:'공장 전경 (가로형 권장)', def:'assets/plant-aerial-new.jpg' },
+  { key:'feature', name:'처리능력 대표 설비', desc:'설비 클로즈업',           def:'assets/equipment-closeup.png' },
+  { key:'g1',      name:'처리능력 갤러리 ①',  desc:'처리 라인 전경',          def:'assets/plant-line.png' },
+  { key:'g2',      name:'처리능력 갤러리 ②',  desc:'파쇄·선별 설비',          def:'assets/plant-cone.png' },
+  { key:'g3',      name:'처리능력 갤러리 ③',  desc:'부지·전경',               def:'assets/plant-forest.png' },
+  { key:'story',   name:'대표 철학 현장 사진', desc:'운영·작업 현장',          def:'assets/operator.png' }
 ];
-
 const $ = function(id){ return document.getElementById(id); };
 
-// ---- 로그인 ----
 $('loginBtn').addEventListener('click', doLogin);
 $('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 function doLogin(){
-  $('loginErr').textContent = '';
-  const email = $('email').value.trim();
-  const pw = $('pw').value;
-  if(!email || !pw){ $('loginErr').textContent = '이메일과 비밀번호를 입력하세요.'; return; }
-  $('loginBtn').disabled = true; $('loginBtn').textContent = '로그인 중...';
-  auth.signInWithEmailAndPassword(email, pw).catch(function(e){
-    $('loginErr').textContent = '로그인 실패: 이메일 또는 비밀번호를 확인하세요.';
-    console.warn(e && e.code);
-  }).finally(function(){
-    $('loginBtn').disabled = false; $('loginBtn').textContent = '로그인';
-  });
+  $('loginErr').textContent='';
+  const email=$('email').value.trim(), pw=$('pw').value;
+  if(!email||!pw){ $('loginErr').textContent='이메일과 비밀번호를 입력하세요.'; return; }
+  $('loginBtn').disabled=true; $('loginBtn').textContent='로그인 중...';
+  auth.signInWithEmailAndPassword(email,pw).catch(function(e){
+    $('loginErr').textContent='로그인 실패: 이메일 또는 비밀번호를 확인하세요.'; console.warn(e&&e.code);
+  }).finally(function(){ $('loginBtn').disabled=false; $('loginBtn').textContent='로그인'; });
 }
 $('logoutBtn').addEventListener('click', function(){ auth.signOut(); });
 
-// ---- 인증 상태 ----
 auth.onAuthStateChanged(function(user){
-  if(user){
-    $('login').style.display = 'none';
-    $('panel').style.display = 'block';
-    buildCards();
-  } else {
-    $('panel').style.display = 'none';
-    $('login').style.display = 'block';
-  }
+  if(user){ $('login').style.display='none'; $('panel').style.display='block'; buildCards(); }
+  else { $('panel').style.display='none'; $('login').style.display='block'; }
 });
 
-// ---- 카드 렌더 + 현재 이미지 불러오기 ----
 function buildCards(){
-  const box = $('cards');
-  box.innerHTML = '';
+  const box=$('cards'); box.innerHTML='';
   SLOTS.forEach(function(s){
-    const c = document.createElement('div');
-    c.className = 'card';
-    c.innerHTML =
+    const c=document.createElement('div'); c.className='card';
+    c.innerHTML=
       '<div class="thumb"><img id="thumb-'+s.key+'" src="'+s.def+'" alt=""></div>'+
       '<div class="body">'+
-        '<div class="name">'+s.name+'</div>'+
-        '<div class="desc">'+s.desc+'</div>'+
+        '<div class="name">'+s.name+'</div><div class="desc">'+s.desc+'</div>'+
         '<div class="row">'+
           '<input type="file" accept="image/*" id="file-'+s.key+'">'+
           '<button class="btn btn-primary" id="up-'+s.key+'">업로드</button>'+
@@ -194,47 +174,46 @@ function buildCards(){
     box.appendChild(c);
     $('up-'+s.key).addEventListener('click', function(){ upload(s); });
   });
-  // 저장된 이미지가 있으면 썸네일 갱신
-  DOC.get().then(function(snap){
-    if(!snap.exists) return;
-    const imgs = (snap.data()||{}).images || {};
-    SLOTS.forEach(function(s){
-      if(imgs[s.key]){ $('thumb-'+s.key).src = imgs[s.key]; }
+  // 저장된 이미지 불러오기 (site 컬렉션)
+  db.collection('site').get().then(function(qs){
+    qs.forEach(function(doc){
+      const t=$('thumb-'+doc.id); const d=doc.data()||{};
+      if(t && d.data){ t.src=d.data; }
     });
   }).catch(function(e){ console.warn(e); });
 }
 
-// ---- 이미지 축소 후 업로드 ----
-function setStatus(key, cls, msg){
-  const el = $('st-'+key); el.className = 'status '+cls; el.textContent = msg;
-}
-async function downscale(file, maxDim){
-  try{
-    const bmp = await createImageBitmap(file);
-    const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
-    const w = Math.round(bmp.width*scale), h = Math.round(bmp.height*scale);
-    const cv = document.createElement('canvas'); cv.width=w; cv.height=h;
+function setStatus(key,cls,msg){ const el=$('st-'+key); el.className='status '+cls; el.textContent=msg; }
+
+// 이미지를 캔버스로 축소 후 base64(JPEG)로. Firestore 1MB 제한을 넘지 않게 단계적으로 줄임.
+async function toDataUrl(file){
+  const bmp = await createImageBitmap(file);
+  const steps = [[1280,0.78],[1040,0.72],[820,0.66],[640,0.6]];
+  for(let i=0;i<steps.length;i++){
+    const maxDim=steps[i][0], q=steps[i][1];
+    const scale=Math.min(1, maxDim/Math.max(bmp.width,bmp.height));
+    const w=Math.max(1,Math.round(bmp.width*scale)), h=Math.max(1,Math.round(bmp.height*scale));
+    const cv=document.createElement('canvas'); cv.width=w; cv.height=h;
     cv.getContext('2d').drawImage(bmp,0,0,w,h);
-    const blob = await new Promise(function(res){ cv.toBlob(res,'image/jpeg',0.85); });
-    return blob || file;
-  }catch(e){ return file; }
+    const url=cv.toDataURL('image/jpeg',q);
+    if(url.length < 950000) return url;   // 약 0.95MB 이하면 OK (Firestore 문서 1MB 제한)
+  }
+  throw new Error('image-too-large');
 }
+
 async function upload(s){
-  const f = $('file-'+s.key).files[0];
+  const f=$('file-'+s.key).files[0];
   if(!f){ setStatus(s.key,'bad','사진을 먼저 선택하세요'); return; }
-  setStatus(s.key,'busy','업로드 중...');
+  setStatus(s.key,'busy','저장 중...');
   try{
-    const blob = await downscale(f, 1600);
-    const ref = storage.ref('site/'+s.key+'_'+Date.now()+'.jpg');
-    await ref.put(blob, { contentType:'image/jpeg' });
-    const url = await ref.getDownloadURL();
-    const patch = { images:{} }; patch.images[s.key] = url;
-    await DOC.set(patch, { merge:true });
-    $('thumb-'+s.key).src = url;
+    const url=await toDataUrl(f);
+    await db.doc('site/'+s.key).set({ data:url, updated:Date.now() }, { merge:true });
+    $('thumb-'+s.key).src=url;
     setStatus(s.key,'ok','저장됨 ✓');
   }catch(e){
     console.warn(e);
-    setStatus(s.key,'bad','실패: '+(e && e.code ? e.code : '다시 시도'));
+    if(e && e.message==='image-too-large') setStatus(s.key,'bad','사진 용량이 너무 큽니다');
+    else setStatus(s.key,'bad','실패: '+(e&&e.code?e.code:'다시 시도'));
   }
 }
 </script>
