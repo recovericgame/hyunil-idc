@@ -481,6 +481,76 @@
     .env-gallery { grid-template-columns: repeat(2, 1fr); }
     .perf-table th:nth-child(3), .perf-table td:nth-child(3) { display: none; }
   }
+
+  /* ---- map quick links (under address) ---- */
+  .map-links { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 10px; }
+  .map-links a {
+    font-size: 13px; font-weight: 700; color: var(--green-700);
+    letter-spacing: -0.01em; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .map-links a::before { content: "›"; color: var(--green-500); font-weight: 800; }
+  .map-links a:hover { color: var(--green-600); text-decoration: underline; }
+
+  /* ============================================================
+     MOBILE — small-screen type scale & layout (desktop unchanged)
+     ============================================================ */
+  @media (max-width: 600px) {
+    .container { padding-inline: 18px; }
+
+    /* 헤더 */
+    .site-header .container { height: 64px; gap: 14px; }
+    .brand .mark { width: 38px; height: 38px; }
+    .brand .ko { font-size: 18px; }
+    .header-phone .ph-num { font-size: 17px; }
+
+    /* 큰 타이틀·숫자 축소 */
+    .hero-grid { padding-top: 48px; padding-bottom: 40px; gap: 28px; }
+    .hero h1 { font-size: 30px; line-height: 1.18; margin-bottom: 18px; }
+    .hero .lede { font-size: 16px; margin-bottom: 28px; }
+    .cred-card { padding: 24px 22px 22px; }
+    .cred-card h3 { font-size: 18px; }
+    .sec-head { margin-bottom: 34px; }
+    .sec-title { font-size: 25px; line-height: 1.3; }
+    .sec-desc { font-size: 15px; }
+    .stat .s-num { font-size: 40px; }
+    .stat .s-unit { font-size: 17px; }
+    .cap-hl-card { padding: 22px 22px; gap: 16px; }
+    .cap-hl-card .big { font-size: 36px; }
+    .donut { width: 200px; height: 200px; }
+    .donut .dv .n { font-size: 40px; }
+    .donut-block { flex-direction: column; align-items: flex-start; gap: 22px; }
+    .trans-stat .tn { font-size: 30px; }
+    .perf-stat .pv { font-size: 32px; }
+    .story-quote blockquote { font-size: 21px; }
+    .plant-banner .pb-title { font-size: 22px; }
+    .olbaro-bar .onum { font-size: 20px; }
+
+    /* 간격 */
+    .section { padding: 56px 0; }
+    .plant-banner { height: 280px; }
+    .cap-feature { height: 230px; }
+
+    /* 남은 그리드 정리 */
+    .cap-hl, .equip-grid, .trans-stats { grid-template-columns: 1fr; }
+    .cert-grid, .cert-gallery, .client-grid,
+    .process-flow, .env-gallery { grid-template-columns: repeat(2, 1fr); }
+
+    /* 막대 그래프 */
+    .bars { gap: 16px; height: 220px; }
+    .bar { width: 56px; }
+    .bar-col .bv { font-size: 17px; }
+
+    /* 인증 가입 바 줄바꿈 */
+    .olbaro-bar { flex-wrap: wrap; gap: 12px; padding: 18px 20px; }
+    .olbaro-bar .onum { margin-left: 0; width: 100%; }
+
+    /* 실적 표는 가로 스크롤 (깨짐 방지) */
+    .perf-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .perf-table { min-width: 460px; }
+
+    /* 지도 */
+    .map-slot, .map-slot iframe { min-height: 300px; }
+  }
 </style>
 </head>
 <body>
@@ -1010,14 +1080,23 @@
 
     <div class="loc-grid">
       <div class="map-slot">
-        <image-slot id="map" shape="rect" placeholder="오시는 길 지도 이미지 (네이버·카카오맵 캡처 등록)"></image-slot>
+        <iframe
+          title="현일산업개발 위치 지도"
+          src="https://www.google.com/maps?q=%EC%B6%A9%EB%82%A8%20%EA%B3%B5%EC%A3%BC%EC%8B%9C%20%EC%9C%A0%EA%B5%AC%EC%9D%8D%20%EC%9C%A0%EA%B5%AC%EB%A7%88%EA%B3%A1%EC%82%AC%EB%A1%9C%20304&output=embed"
+          style="width:100%;height:100%;min-height:420px;border:0;display:block"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
       <div class="contact-card">
         <h4>현일산업개발</h4>
         <div class="contact-list">
           <div class="contact-item">
             <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-            <div><div class="ci-label">주소</div><div class="ci-val">충남 공주시 유구읍 유구마곡사로 304 <span style="color:var(--steel-500);font-weight:600">(우 32508)</span></div></div>
+            <div><div class="ci-label">주소</div><div class="ci-val">충남 공주시 유구읍 유구마곡사로 304 <span style="color:var(--steel-500);font-weight:600">(우 32508)</span></div>
+            <div class="map-links">
+              <a href="https://map.naver.com/p/search/%EC%B6%A9%EB%82%A8%20%EA%B3%B5%EC%A3%BC%EC%8B%9C%20%EC%9C%A0%EA%B5%AC%EC%9D%8D%20%EC%9C%A0%EA%B5%AC%EB%A7%88%EA%B3%A1%EC%82%AC%EB%A1%9C%20304" target="_blank" rel="noopener">네이버 지도</a>
+              <a href="https://map.kakao.com/?q=%EC%B6%A9%EB%82%A8%20%EA%B3%B5%EC%A3%BC%EC%8B%9C%20%EC%9C%A0%EA%B5%AC%EC%9D%8D%20%EC%9C%A0%EA%B5%AC%EB%A7%88%EA%B3%A1%EC%82%AC%EB%A1%9C%20304" target="_blank" rel="noopener">카카오맵</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=%EC%B6%A9%EB%82%A8%20%EA%B3%B5%EC%A3%BC%EC%8B%9C%20%EC%9C%A0%EA%B5%AC%EC%9D%8D%20%EC%9C%A0%EA%B5%AC%EB%A7%88%EA%B3%A1%EC%82%AC%EB%A1%9C%20304" target="_blank" rel="noopener">구글 지도</a>
+            </div></div>
           </div>
           <div class="contact-item">
             <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
