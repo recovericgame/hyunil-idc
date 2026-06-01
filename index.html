@@ -14,18 +14,17 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="현일산업개발 — 건설폐기물 중간처리 · 순환골재 전문">
 <meta property="og:description" content="충남 공주 · 일 800톤 처리, 재자원화율 98.77%. 건설사·관급 발주처가 믿고 맡기는 적법 처리 파트너.">
-<meta property="og:image" content="https://hyunil-cnd.com/assets/og-thumbnail.jpg">
+<meta property="og:image" content="https://www.hyunil-cnd.com/assets/og-thumbnail.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://hyunil-cnd.com/">
+<meta property="og:url" content="https://www.hyunil-cnd.com/">
 <meta property="og:site_name" content="현일산업개발">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="현일산업개발 — 건설폐기물 중간처리 · 순환골재 전문">
 <meta name="twitter:description" content="충남 공주 · 일 800톤 처리, 재자원화율 98.77%.">
-<meta name="twitter:image" content="https://hyunil-cnd.com/assets/og-thumbnail.jpg">
+<meta name="twitter:image" content="https://www.hyunil-cnd.com/assets/og-thumbnail.jpg">
 
 <link rel="stylesheet" href="colors_and_type.css">
-<script src="image-slot.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -36,6 +35,8 @@
     background: #fff;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   a { color: inherit; text-decoration: none; }
   ul { margin: 0; padding: 0; list-style: none; }
@@ -344,7 +345,7 @@
   .story-photo { width: 100%; aspect-ratio: 4/5; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-1); box-shadow: var(--shadow-md); }
   .story-photo image-slot { width: 100%; height: 100%; display: block; }
   .story-quote .qmark { font-size: 76px; line-height: 0.6; color: var(--green-300); font-weight: 900; font-family: Georgia, serif; display: block; height: 38px; }
-  .story-quote blockquote { margin: 0 0 28px; font-size: 27px; font-weight: 700; line-height: 1.5; color: var(--fg-1); letter-spacing: -0.02em; text-wrap: balance; }
+  .story-quote blockquote { margin: 0 0 28px; font-size: 27px; font-weight: 700; line-height: 1.6; color: var(--fg-1); letter-spacing: -0.02em; }
   .story-quote blockquote .hl { color: var(--green-700); }
   .story-quote .attrib { display: flex; align-items: center; gap: 14px; }
   .story-quote .attrib .line { width: 36px; height: 2px; background: var(--green-700); }
@@ -708,7 +709,7 @@
 
 <!-- ============ 현장 배너 ============ -->
 <section class="plant-banner" data-screen-label="현장 배너">
-  <image-slot id="img-aerial" fit="cover" shape="rect" src="assets/plant-aerial-new.jpg" placeholder="공장 전경 이미지"></image-slot>
+  <img src="assets/plant-aerial-new.jpg" alt="현일산업개발 공장 전경" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
   <div class="pb-overlay">
     <div class="container">
       <span class="pb-eyebrow">
@@ -766,7 +767,7 @@
     </div>
 
     <div class="cap-feature">
-      <image-slot id="img-cap-feature" fit="cover" shape="rect" src="assets/equipment-closeup.png" placeholder="설비 이미지"></image-slot>
+      <img src="assets/equipment-closeup.png" alt="대표 처리 설비" style="width:100%;height:100%;object-fit:cover;display:block">
     </div>
 
     <div class="cap-hl">
@@ -825,9 +826,9 @@
     </div>
 
     <div class="cap-gallery">
-      <div class="g"><image-slot id="img-cap-1" fit="cover" shape="rect" src="assets/plant-line.png" placeholder="설비 이미지"></image-slot></div>
-      <div class="g"><image-slot id="img-cap-2" fit="cover" shape="rect" src="assets/plant-cone.png" placeholder="설비 이미지"></image-slot></div>
-      <div class="g"><image-slot id="img-cap-3" fit="cover" shape="rect" src="assets/plant-forest.png" placeholder="설비 이미지"></image-slot></div>
+      <div class="g"><img src="assets/plant-line.png" alt="처리 라인" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div class="g"><img src="assets/plant-cone.png" alt="파쇄·선별 설비" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div class="g"><img src="assets/plant-forest.png" alt="공장 부지 전경" style="width:100%;height:100%;object-fit:cover;display:block"></div>
     </div>
 
     <div class="chart-card">
@@ -1077,11 +1078,11 @@
   <div class="container">
     <div class="story-grid">
       <div class="story-photo">
-        <image-slot id="img-story" fit="cover" shape="rect" src="assets/operator.png" placeholder="현장 사진 이미지"></image-slot>
+        <img src="assets/operator.png" alt="현장 운영" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
       <div class="story-quote">
         <span class="qmark">&ldquo;</span>
-        <blockquote>건설폐기물은 버려지는 것이 아니라, <span class="hl">다시 쓰일 자원</span>입니다. 한결같이 원칙대로 처리해 온 이유, 그 한 가지를 지키기 위해서였습니다.</blockquote>
+        <blockquote>건설폐기물은 버려지는 것이 아니라,<br><span class="hl">다시 쓰이는 자원</span>입니다.<br>한결같이 원칙대로 처리해 온 이유,<br>그 하나를 지키기 위해서였습니다.</blockquote>
         <div class="attrib">
           <span class="line"></span>
           <b>박철균</b>
